@@ -1,0 +1,38 @@
+class Solution {
+public:
+// Create a max heap and a variable to keep track of the minimum value in the array.
+// For each number in the input array, if it is odd, multiply it by 2 
+// and push it onto the heap.   Otherwise, just push it onto the heap.
+// Also, update the minimum value if necessary.
+// Initialize a variable to keep track of the minimum deviation.
+// While the maximum value in the heap is even, pop it off the heap, divide it by 2, and push it back onto the heap. Update the minimum deviation and the minimum value if necessary.
+// If the maximum value in the heap is odd, we cannot reduce it any further by dividing by 2. In   this case, break out of the loop.
+// Return the minimum deviation.
+    int minimumDeviation(vector<int>& nums) {
+        priority_queue<int>pq;
+
+        int minval=INT_MAX;
+        for(auto num:nums)
+        {
+            if(num%2 != 0)
+             num *= 2;
+             minval = min(minval,num);
+            pq.push(num);
+        }
+       int  mindeviation = INT_MAX;
+       while(!pq.empty())
+       {
+           int maxval = pq.top();
+           pq.pop();
+
+           mindeviation=min(mindeviation,maxval-minval);
+
+           if(maxval %2 !=0) break;
+           maxval /= 2;
+           minval = min(minval,maxval);
+           pq.push(maxval);
+       }
+       return mindeviation;
+        
+    }
+};
