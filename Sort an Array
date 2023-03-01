@@ -1,0 +1,72 @@
+class Solution {
+public:
+   void merge(vector<int>& nums,int s,int mid ,int e)
+   {
+       int len1 = mid-s+1;
+       int len2 = e-mid;
+
+       //make temp array
+
+       int *first = new int[len1];
+       int *second = new int[len2];
+
+       //copy the values
+
+       int mainarrayindex=s;
+       for(int i=0;i<len1;i++)
+       {
+           first[i] = nums[mainarrayindex++];
+       }
+       mainarrayindex=mid+1;
+       for(int i=0;i<len2;i++)
+       {
+           second[i]=nums[mainarrayindex++];
+       }
+
+       //merge two sorted array
+
+       int i=0;
+       int j=0;
+       int k=s;
+
+       while(i<len1 && j<len2)
+       {
+           if(first[i] < second[j])
+           {
+               nums[k++] = first[i++];
+           }
+           else
+           {
+               nums[k++] = second[j++];
+           }
+       }
+
+       //in case len of first array is longer than second array
+       
+       while(i<len1)
+       {
+           nums[k++] = first[i++];
+       }
+       while(j<len2)
+       {
+           nums[k++] = second[j++];
+       }
+   }
+
+   void mergesort(vector<int>& nums,int s,int e)
+   {
+       if(s>=e) return;
+       int mid = s+(e-s)/2;
+       mergesort(nums,s,mid);   //left part sorted
+       mergesort(nums,mid+1,e); //right part sorted
+       merge(nums,s,mid,e);
+   }
+
+    vector<int> sortArray(vector<int>& nums) {
+        int n=nums.size();
+        mergesort(nums,0,n-1);
+        return nums;
+
+        
+    }
+};
