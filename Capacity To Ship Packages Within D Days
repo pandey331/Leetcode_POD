@@ -1,0 +1,44 @@
+class Solution {
+    public:
+    bool check(vector<int>& weights,int days,int capacity)
+    {
+        int requiredays=1;
+        int currweight=0;
+        for(int i:weights){
+        if(currweight+i > capacity)
+        {
+            requiredays++;
+            currweight=0;
+
+        }
+        currweight += i;
+        }
+        if(requiredays>days) return false;
+        return true;
+    }
+    int shipWithinDays(vector<int>& weights, int days) {
+        int left=0;
+        int right=0;
+        for(int i:weights)
+        {
+            left = max(left,i);
+            right += i;
+        }
+        int ans = right;
+        while(left<=right)
+        {
+            int mid = (left+right)/2;
+            if(check(weights,days,mid))
+            {
+                ans = mid;
+                right = mid-1;
+            }
+            else{
+                left = mid+1;
+            }
+        }
+        return ans;
+        
+        
+    }
+};
