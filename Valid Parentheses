@@ -1,0 +1,30 @@
+class Solution {
+public:
+    bool isValid(string s) {
+    stack<char>st;
+     for(int i= 0;i<s.length();i++)
+     {
+         //if opening bracket found
+         if (s[i]=='(' || s[i]=='{' || s[i]=='[')
+         {
+             st.push(s[i]);
+         }
+         else{
+             //if closing bracket found
+
+            if(st.empty() or (s[i]==')' && st.top()!='(') or (s[i]=='}' && st.top()!='{') or
+             (s[i]==']' && st.top()!='['))  return false;
+            else
+              st.pop(); //otherwise pop opening brackets
+         }
+         
+         
+     }
+     if(!st.empty()) return false;
+     return true; 
+    //  return st.empty(); // if the stack is empty, all opening brackets have been matched with their corresponding closing brackets,
+                           // so the string is valid, otherwise, there are unmatched opening brackets, so return false
+
+        
+    }
+};
